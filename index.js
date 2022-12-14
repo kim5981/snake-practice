@@ -35,6 +35,7 @@ function checkCollision(){
     if(appleX == x && appleY == y){
         appleX = Math.floor(Math.random() * tileCount)
         appleY = Math.floor(Math.random() * tileCount)
+        tailLength++
     }
 }
 
