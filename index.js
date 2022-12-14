@@ -16,6 +16,7 @@ function drawGame(){
     drawSnake()
     moveSnake()
     drawApple()
+    checkCollision()
     // let speed = 7
     // setTimeout(drawGame, 1000/speed) // update screen 7x a second
     
@@ -25,6 +26,16 @@ function drawGame(){
 function drawSnake(){
     ctx.fillStyle = "white"
     ctx.fillRect(x * tileCount, y * tileCount, tileSize, tileSize)
+}
+
+const snakeBits = []
+let tailLength = 2
+
+function checkCollision(){
+    if(appleX == x && appleY == y){
+        appleX = Math.floor(Math.random() * tileCount)
+        appleY = Math.floor(Math.random() * tileCount)
+    }
 }
 
 function clearScreen(){ // fill with black
@@ -87,6 +98,7 @@ function drawApple(){
     ctx.fillStyle = "red"
     ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize)
 }
+
 
 
 drawGame()
