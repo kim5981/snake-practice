@@ -15,7 +15,7 @@ class snakeBit{
 let speed = 7
 let tileCount = 20
 
-let tileSize = 18
+let tileSize = canvas.clientWidth/tileCount-2
 let headX = 10
 let headY = 10
 
@@ -41,6 +41,11 @@ function drawGame(){
 
     // game over
 
+    let result = gameOver()
+    if(result){
+        return;
+    }
+
     clearScreen()
     drawSnake()
     drawApple()
@@ -51,15 +56,52 @@ function drawGame(){
     
 }
 
+function gameOver(){
+    
+    let over = false
+
+    if( ySpeed == 0 && xSpeed == 0 ) return false;
+    if( 
+        headX < 0 || 
+        headY < 0 ||  
+        headX === tileCount || 
+        headY === tileCount  
+    ){
+         over = true
+    }
+    
+    for(let i= 0; i < snakeBits.length; i++){
+        let bit = snakeBits[i]
+        if(bit.x === headX && bit.y === headY){
+            over = true
+            break
+        }
+    }
+    // game over text
+    if(over){
+        ctx.fillStyle="red"
+        ctx.font="50px verdana"
+        ctx.fillText("Game Over! ", canvas.clientWidth/6.5, canvas.clientHeight/2)
+    }
+
+    return over
+}
+
 
 function drawSnake(){
-    ctx.fillStyle = "white"
+    ctx.fillStyle = "yellow"
 
     for(let i=0; i < snakeBits.length; i++){
         let bit = snakeBits[i]
         ctx.fillRect(bit.x * tileCount, bit.y * tileCount, tileSize, tileSize)
     }
-        snakeBits.push(new snakeBit(headX, headY))
+    snakeBits.push(new snakeBit(headX, headY))
+    if(snakeBits.length > tailLength){
+        snakeBits.shift()
+    }
+
+    ctx.fillStyle="green"
+    ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize)
 }
 
 function drawApple(){
@@ -81,9 +123,8 @@ function checkCollision(){
 
 function setScore(){
     ctx.fillStyle = "white"
-    ctx.font = "14px verdena"
+    ctx.font = "14px verdana"
     ctx.fillText("Score: " + score, canvas.clientWidth-50, 10)
-
 }
 
 function clearScreen(){ // fill with black
@@ -130,6 +171,8 @@ function moveSnake(){
     headX = headX + xSpeed
     headY = headY + ySpeed
 }
+
+
 
 
 
