@@ -32,6 +32,9 @@ let appleY = 5
 
 let score = 0
 
+
+// game pieces
+
 function drawGame(){
 
     moveSnake()
@@ -59,13 +62,20 @@ function drawSnake(){
         snakeBits.push(new snakeBit(headX, headY))
 }
 
+function drawApple(){
+    ctx.fillStyle = "red"
+    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize)
+}
 
+
+// detection functions
 
 function checkCollision(){
     if(appleX == headX && appleY == headY){
         appleX = Math.floor(Math.random() * tileCount)
         appleY = Math.floor(Math.random() * tileCount)
         tailLength++
+        score++
     }
 }
 
@@ -73,6 +83,7 @@ function setScore(){
     ctx.fillStyle = "white"
     ctx.font = "14px verdena"
     ctx.fillText("Score: " + score, canvas.clientWidth-50, 10)
+
 }
 
 function clearScreen(){ // fill with black
@@ -80,57 +91,44 @@ function clearScreen(){ // fill with black
     ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight)
 }
 
-// change snake direction
 
+// change snake direction with keys
 
 document.body.addEventListener("keydown", keydown)
 
-function keydown(e){
+function keydown(){
     //up
-    if(e.keyCode==38){
+    if(event.keyCode==38){
         if(ySpeed == 1) return;
-        ySpeed = -1 // one tile up
+        ySpeed = -1 
         xSpeed = 0
-        console.log("up")
     }
     
     //down
-    if(e.keyCode==40){
+    if(event.keyCode==40){
         if(ySpeed == -1) return;
-        ySpeed = 1 // one tile down
+        ySpeed = 1 
         xSpeed = 0
-        console.log("down")
     }
     
     //left
-    if(e.keyCode==37){
+    if(event.keyCode==37){
         if(xSpeed == 1) return;
         ySpeed = 0
-        xSpeed = -1 // one tile left
-        console.log("left")
+        xSpeed = -1 
     }
     
     //right
-    if(e.keyCode==39){
+    if(event.keyCode==39){
         if(ySpeed == -1) return;
         ySpeed = 0
-        xSpeed = 1 // one tile right
-        console.log("right")
+        xSpeed = 1
     }
 }
 
 function moveSnake(){
     headX = headX + xSpeed
     headY = headY + ySpeed
-}
-
-
-// apple variables
-
-
-function drawApple(){
-    ctx.fillStyle = "red"
-    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize)
 }
 
 
