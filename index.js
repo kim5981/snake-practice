@@ -123,7 +123,7 @@ function checkCollision(){
 
 function setScore(){
     ctx.fillStyle = "white"
-    ctx.font = "14px verdana"
+    ctx.font = "14px verdena"
     ctx.fillText("Score: " + score, canvas.clientWidth-50, 10)
 }
 
